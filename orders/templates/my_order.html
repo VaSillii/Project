@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= My Orders Section ======= -->
+<section class="contact mt-section">
+    <div id="auth" class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Заказы</h2>
+            <p>Мои заказы</p>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                <div class="php-email-form">
+                    <div class="panel-body">
+                        <div class="comments">
+                            <h5 class="font-weight-bold">Заказанные:</h5>
+                            <ul class="media-list">
+                                {% for item in orders %}
+                                <li class="media mb-3">
+                                    <div class="media-body">
+                                        <div class="comments-panel">
+                                            <div class="alert alert-info text-left">
+                                                <div class="author">Исполнитель: {{ item.master.get_full_name }}</div>
+                                                <div class="metadata">
+                                                    <span class="date">{{ item.date_of_completion|date:'d.m.Y' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body pl-3 pr-3">
+                                                <div class="media-text text-justify">
+                                                    <div>Тип работы: {{ item.type_work.name }}</div>
+                                                    <div>Стоимость работы: {{ item.price }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="comments">
+                            <h5 class="font-weight-bold">Выполняемые:</h5>
+                            <ul class="media-list">
+                                {% for item in orders_to_do %}
+                                <li class="media mb-3">
+                                    <div class="media-body">
+                                        <div class="comments-panel">
+                                            <div class="alert alert-info text-left">
+                                                <div class="author">Клиент: {{ item.master.get_full_name }}</div>
+                                                <div class="metadata">
+                                                    <span class="date">{{ item.date_of_completion|date:'d.m.Y' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body pl-3 pr-3">
+                                                <div class="media-text text-justify">
+                                                    <div>Тип работы: {{ item.type_work.name }}</div>
+                                                    <div>Стоимость работы: {{ item.price }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+</section>
+
+<!-- End My Orders Section -->
+{% endblock %}

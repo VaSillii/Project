@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Profile Section ======= -->
+<section class="contact mt-section">
+    <div id="auth" class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Профиль</h2>
+            <p>Информация профиля</p>
+            {% if flag_save == 1 %}
+            <div class="alert alert-success w-100 text-center" role="alert">
+                Данные сохранены.
+            </div>
+            {% elif flag_save == 2%}
+            <div class="alert alert-danger w-100" role="alert">
+                Ошибка сохранения. Проверьте вводимые данные
+            </div>
+            {% endif %}
+            <form action="{% url 'accounts:profile_info'%}" method="post" role="form" class="row"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-lg-5 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="php-email-form">
+                        <h2 class="text-center">Пользователь сайта {{ MEDIA_URL }}{{ user_data.photo.url }}</h2>
+                        <div class="panel-body">
+                            <div class="" id="author">
+                                <div class="col-12 form-row">
+                                    <div class="col-12 text-center">
+                                        <img class="img-circle img-fluid img-thumbnail"
+                                             src="{{ user_data.profile.get_avatar }}">
+                                    </div>
+                                    <div class="form-group row col-12">
+                                        {{ form.avatar_user.label_tag }}
+                                        <input type="file" class="col-12" name="avatar_user" id="avatar_user"
+                                               value=""/>
+                                        {{ form.avatar_user.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 form-group">
+                                    <label for="username">Имя пользователя на сайте:</label>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                           value="{{ user_data.username }}"/>
+                                    {{ form.username.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="about_me">Обо мне</label>
+                                    <textarea class="form-control" name="about_me" rows="10" data-rule="required"
+                                              id="about_me">{{ user_data.profile.about_me }}</textarea>
+                                    {{ form.profile.about_me.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="addition_info">Дополнительная информация:</label>
+                                    <textarea class="form-control" name="addition_info" rows="10" data-rule="required"
+                                              id="addition_info">{{ user_data.profile.addition_info }}</textarea>
+                                    {{ form.profile.addition_info.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    <div class="php-email-form">
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.position.label_tag }}
+                                <select name="position" class="form-control selectpicker" id="position">
+                                    {% for key, val in user_data.profile.get_choice_position.items %}
+                                    {% if key == user_data.profile.position %}
+                                    <option selected value="{{ key }}">{{ val }}</option>
+                                    {% else %}
+                                    <option value="{{ key }}">{{ val }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {{ form.position.errors }}
+                            </div>
+                            <div class="form-group row col-md-12">
+                                <label for="surname">Фамилия:</label>
+                                <input type="text" class="form-control" name="surname" id="surname" data-rule="email"
+                                       value="{{ user_data.profile.surname }}"/>
+                                {{ form.surname.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="name">Имя:</label>
+                                <input type="text" class="form-control" name="name" id="name"
+                                       value="{{ user_data.profile.name }}"/>
+                                {{ form.name.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="patronymic">Отчество:</label>
+                                <input type="text" class="form-control" name="patronymic" id="patronymic"
+                                       data-rule="email"
+                                       value="{{ user_data.profile.patronymic }}"/>
+                                {{ form.patronymic.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="dob">Дата рождения:</label>
+                                <input type="text" class="form-control" name="dob" id="dob"
+                                       value="{{ user_data.profile.dob|date:'d.m.Y' }}"/>
+                                {{ form.dob.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" name="email" id="email" required
+                                       data-rule="email"
+                                       value="{{ user_data.email }}"/>
+                                {{ form.email.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="phone_number">Телефон:</label>
+                                <input type="text" class="form-control" name="phone_number" id="phone_number"
+                                       data-rule="email"
+                                       value="{{ user_data.profile.phone_number }}"/>
+                                {{ form.phone.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.university.label_tag }}
+                                <div class="w-100">
+                                    <select name="university" class="form-control selectpicker" id="id_university">
+                                        <option value="">Выберите университет</option>
+                                        {% for item in university %}
+                                        {% if item == user_data.profile.education.name_university %}
+                                        <option selected value="{{ item.id }}">{{item}}</option>
+                                        {%else%}
+                                        {% endif %}
+                                        <option value="{{item.id}}">{{ item }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {{ form.university.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.faculty.label_tag }}
+                                <input type="text" class="form-control" name="faculty" id="faculty"
+                                       value="{{ user_data.profile.education.faculty }}"/>
+                                {{ form.faculty.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.specialization.label_tag }}
+                                <input type="text" class="form-control" name="specialization" id="specialization"
+                                       value="{{ user_data.profile.education.specialization }}"/>
+                                {{ form.specialization.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.graduation_date.label_tag }}
+                                <input type="text" class="form-control" name="graduation_date" id="graduation_date"
+                                       value="{{ user_data.profile.education.graduation_date|date:'d.m.Y' }}"/>
+                                {{ form.graduation_date.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.type_work.label_tag }}
+                                <div class="w-100">
+                                    <select name="type_work" class="form-control selectpicker" id="id_type_work">
+                                        <option value="">Выберите тип работы</option>
+                                        {% for item in type_work %}
+                                        {% if item == user_data.profile.work_price.type_work %}
+                                        <option selected value="{{item.id}}">{{ item.name }}</option>
+                                        {% else %}
+                                        <option value="{{item.id}}">{{ item.name }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {{ form.type_work.errors }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                {{ form.price.label_tag }}
+                                <input type="text" class="form-control" name="price" id="id_price"
+                                       value="{{ user_data.profile.work_price.price }}"/>
+                                {{ form.price.errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <a class="btn-link" href="{% url 'accounts:password_change' %}">Изменить пароль</a>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group row col-md-12">
+                                <label for="phone_number">Зарегистрирован:</label>
+                                <input type="text" class="form-control" readonly="readonly" name="date_joined"
+                                       id="date_joined"
+                                       value="{{ user_data.date_joined }}"/>
+                            </div>
+                        </div>
+                        <div class="action-row d-flex justify-content-end">
+                            <button type="submit" name="next" value="{{ next }}" class="btn">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<!-- End Profile Section -->
+{% endblock %}

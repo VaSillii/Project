@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i"
+          rel="stylesheet">
+
+    {% block CssFile %}
+    <!-- Different support CSS Files -->
+    <link href="{% static 'different/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'different/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'different/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'different/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'different/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'different/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    {% endblock %}
+
+    <title>{% block title %}FixPC.ru{% endblock %}</title>
+</head>
+<body>
+{% block header %}
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container-fluid d-flex">
+        <div class="logo mr-auto">
+            <h1 class="text-light"><a href="/"><span>FixPC.ru</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <!-- Start nav-menu -->
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="{% url 'base_page' %}#hero">Главная</a></li>
+                <li><a href="{% url 'base_page' %}#about">О нас</a></li>
+                <li><a href="{% url 'base_page' %}#services">Сервис</a></li>
+                <li><a href="{% url 'orders:select_order' %}">Заказать работу</a></li>
+                <li><a href="{% url 'orders:list_specialists' %}">Специалисты</a></li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <ul>
+                        <li class="drop-down">
+                            <a href="#">
+                                <img class="img-circle img-fluid img-thumbnail" width="25px" height="25px" src="{{ request.user.profile.get_avatar }}">
+                                {{ request.user.username }}
+                            </a>
+                            <ul>
+                                <li><a href="{% url 'accounts:profile_info' %}">Профиль</a></li>
+                                <li><a href="{% url 'orders:my_order' %}">Мои заказы</a></li>
+                                <li><a href="{% url 'accounts:logout'%}?next=/">Выход</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                {% else %}
+                <li class="get-started">
+                    <a href="{% url 'accounts:login'%}">Войти</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        <!-- End nav-menu -->
+    </div>
+</header>
+<!-- End Header -->
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block footer %}
+<!-- ======= Footer ======= -->
+<footer id="footer" class="fixed-bottom">
+    <div class="container py-4">
+        <div class="copyright">
+            &copy; Copyright <strong><span>FixPC.ru</span></strong>. Все права защищены.
+        </div>
+    </div>
+</footer>
+<!-- End Footer -->
+{% endblock %}
+
+{% block JSFile %}
+<!-- Support JS Files -->
+<script src="{% static 'different/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'different/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'different/jquery.easing/jquery.easing.min.js' %}"></script>
+
+
+<!--<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>-->
+<script src="{% static 'different//venobox/venobox.min.js' %}"></script>
+<script src="{% static 'different/owl.carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'different/aos/aos.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+</body>
+</html>

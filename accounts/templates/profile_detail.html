@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Profile Detail Section ======= -->
+<section class="contact mt-section">
+    <div id="auth" class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Профиль</h2>
+            <p>Пользователь сайта {{ user_data.username }}</p>
+        </div>
+        <div class="col-12">
+            <div class="php-email-form">
+                <div class="col-12">
+                    <a class="btn-orange" href="{% url 'orders:list_specialists' %}?page={{previous_page}}">Назад</a>
+                    <div class="row mt-4 border-bottom pb-4">
+                        <div class="col-12 col-sm-4 col-md-2 text-center mb-4">
+                            <img class="img-circle img-fluid img-thumbnail" src="{{ user_data.profile.get_avatar }}">
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-10">
+                            <div class="column ml-2">
+                                <h2 class="d-flex align-content-center font-weight-bold">
+                                    {{ user_data.get_full_name }}
+                                </h2>
+                                <div class="row">
+                                    <div>
+                                        <div class="d14"></div>
+                                    </div>
+                                    <h2 class="mt-2 ml-2">{{ avg_review }}</h2>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-12 col-md-6">
+                                        Телефон: {{ user_data.profile.phone_number }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        email: {{ user_data.email }}
+                                    </div>
+                                </div>
+                                <h5 class="font-weight-bold">Обо мне:</h5>
+                                <p class="bg-light p-3">{{ user_data.profile.about_me }}</p>
+                                <h5 class="font-weight-bold">Дополнительная информация:</h5>
+                                <p class="bg-light p-3">{{ user_data.profile.additional_info }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="font-weight-bold">Образование:</h5>
+                        <p class="bg-light p-3">{{ user_data.profile.education.name_university }};
+                            факультет &mdash;{{ user_data.profile.education.faculty }};
+                            специальность &mdash; {{ user_data.profile.education.specialization }};
+                            выпуск &mdash; {{ user_data.profile.education.graduation_date|date:"Y" }};</p>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="font-weight-bold">Услуги и цены:</h5>
+                        <ul>
+                            {#{% for elm_wp in item.profile.work_price %}#}
+                            <li>
+                        <span>
+                            {{ user_data.profile.work_price.type_work }}
+                        </span>
+                                <span>
+                            {{ user_data.profile.work_price.price }}
+                        </span>
+                            </li>
+                            {#{% endfor %}#}
+                        </ul>
+                    </div>
+
+                    <div class="comments">
+                        <h5 class="font-weight-bold">Отзывы:</h5>
+                        <ul class="media-list">
+                            {% for comment in comments %}
+                            <li class="media mb-3">
+                                <div class="media-left mr-4">
+                                    <img class="media-object img-circle img-fluid img-thumbnail" width="50px"
+                                         height="50px" src="{{ comment.user_comment.profile.get_avatar }}" alt="...">
+                                </div>
+                                <div class="media-body">
+                                    <div class="comments-panel">
+                                        <div class="alert alert-info">
+                                            <div class="author">{{ comment.user_comment.get_full_name }}</div>
+                                            <div class="metadata">
+                                                <span class="date">{{ comment.created_at }}</span>
+                                            </div>
+                                             <div class="row">
+                                                <div>
+                                                    <div class="d14"></div>
+                                                </div>
+                                                <h2 class="mt-2 ml-2">{{ comment.assessment }}</h2>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body pl-3 pr-3">
+                                            <div class="media-text text-justify">
+                                                {{ comment.text_message }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <li class="media mb-3">
+                                {% if request.user.is_authenticated %}
+                                <form class="col-12"
+                                      action="{% url 'accounts:profile_detail' user_id=user_data.id %}?page={{previous_page}}"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <div class="column">
+                                        <input type="hidden" name="user_comment" value="{{ user_data.id }}"/>
+                                        <input type="hidden" name="user" value="{{ request.user.id }}"/>
+                                        <div class="row">
+                                            <div class="form-row col-12">
+                                                <div class="form-group col-12">
+                                                    {{ form.text_message.label_tag }}
+                                                    <textarea class="form-control" name="text_message" rows="10"
+                                                              data-rule="required"
+                                                              id="id_text_message">{{form.text_message.value}}</textarea>
+                                                    {{ form.text_message.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row col-12">
+                                                <div class="form-group">
+                                                    {{ form.assessment.label_tag }}
+                                                    {{ form.assessment }}
+                                                    {{ form.assessment.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="action-row d-flex justify-content-end">
+                                            <button type="submit" name="next" value="{{ next }}" class="btn">Отправить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% else %}
+                                <p>Оставлять комментарии могут только авторизованные пользователи.</p>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Profile Section -->
+{% endblock %}

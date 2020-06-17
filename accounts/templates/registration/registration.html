@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Auth Section ======= -->
+<section class="mt-section d-block">
+    <div id="auth" class="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Авторизация</h2>
+                <p>Регистрация пользователя</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info">
+                        <div class="address">
+                            <i class="icofont-google-map"></i>
+                            <h4>Местоположение:</h4>
+                            <p>Москва, Кремль</p>
+                        </div>
+
+                        <div class="email">
+                            <i class="icofont-envelope"></i>
+                            <h4>Email:</h4>
+                            <p>fixpk@gmail.com</p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="icofont-phone"></i>
+                            <h4>Телефон:</h4>
+                            <p>+1 5589 55488 55s</p>
+                        </div>
+                        <iframe src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=55.7504461, 37.6174943&amp;q=Moscow+(Moscow_town)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+                                frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    <form action="{% url 'accounts:register'%}" method="post" role="form" class="php-email-form">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.surname.label }}
+                                {{ form.surname }}
+                                {{ form.surname.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.name.label }}
+                                {{ form.name }}
+                                {{ form.name.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.patronymic.label }}
+                                {{ form.patronymic }}
+                                {{ form.patronymic.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.username.label }}
+                                {{ form.username }}
+                                {{ form.username.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.email.label }}
+                                {{ form.email }}
+<!--                                <input type="email" class="form-control" name="email" id="email" data-rule="email"-->
+<!--                                       data-msg="Please enter a valid email"/>-->
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.phone_number.label }}
+                                {{ form.phone_number }}
+                                {{ form.phone_number.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.password1.label }}
+                                <input type="password" class="form-control" name="password1" id="password1" required
+                                       data-rule="email"
+                                       data-msg="Please enter a valid password"/>
+                                {{ form.password1.errors }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.password2.label }}
+                                <input type="password" class="form-control" name="password2" id="password2" required
+                                       data-rule="email"
+                                       data-msg="Please enter a valid password"/>
+                                {{ form.password2.errors }}
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Зарегистрироваться</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Auth Section -->
+
+{% endblock %}

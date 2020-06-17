@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+
+{% load orders_extras %}
+{% block content %}
+<!-- ======= Profile Section ======= -->
+<section class="contact mt-section">
+    <div id="auth" class="container">
+        <div class="section-title" data-aos="fade-up">
+
+            <h2>Заказ</h2>
+            <p>Оформление заказа</p>
+            <form action="{% url 'orders:order_work' category_id=spec_id.id%}" method="post" role="form" class="row">
+                {% csrf_token %}
+                <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="php-email-form">
+                        <div class="d-flex justify-content-start mb-4">
+                            <a class="btn-orange " href="{% url 'orders:select_order' %}">Назад</a>
+                        </div>
+                        <div class="form-row col-12">
+                                <div class="form-group row col-md-12">
+                                    Специализация заказа: {{ spec_id.name }}
+                                </div>
+                            </div>
+
+                        <div class="panel-body col-12">
+                            <div class="form-row">
+                                <div class="form-group row col-md-12">
+                                    <input type="hidden" name="spec_order" value="{{ spec_id.id }}"/>
+                                    {{ form.type_work.label_tag }}
+                                    <div class="w-100">
+                                        <select name="type_work" class="form-control selectpicker" id="id_type_workk">
+                                            <option value="">Выберите тип работы</option>
+                                            {% for item in type_work %}
+                                            <option value="{{item.id}}">{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {{ form.type_work.errors }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group row col-md-12">
+                                    {{ form.master.label_tag }}
+                                    <div class="w-100">
+                                        <select name="master" class="form-control selectpicker" id="id_master">
+                                            <option value="">Выберите исполнителя</option>
+                                            {% for item in masters %}
+                                            <option value="{{item.id}}">{{ item.get_full_name }} (рейтинг:  {{ avd|get_item:item.username }})</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {{ form.master.errors }}
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="form-row">
+                                    <div class="form-group row col-md-12">
+                                        {{ form.date_of_completion.label_tag }}
+                                        {{ form.date_of_completion }}
+                                        {{ form.date_of_completion.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="form-row">
+                                    <div class="form-group row col-md-12">
+                                        {{ form.price.label_tag }}
+                                        {{ form.price }}
+                                        {{ form.price.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 action-row d-flex justify-content-end">
+                                <button type="submit" name="next" value="{{ next }}" class="btn">Сохранить</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- End Profile Section -->
+{% endblock %}

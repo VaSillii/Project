@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Специалисты{% endblock %}
+
+{% block header %}
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container-fluid d-flex">
+        <div class="logo mr-auto">
+            <h1 class="text-light"><a href="/"><span>FixPC.ru</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <!-- Start nav-menu -->
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li><a href="{% url 'base_page' %}#hero">Главная</a></li>
+                <li><a href="{% url 'base_page' %}#about">О нас</a></li>
+                <li><a href="{% url 'base_page' %}#services">Сервис</a></li>
+                <li><a href="{% url 'orders:select_order' %}">Заказать работу</a></li>
+                <li class="active"><a href="{% url 'orders:list_specialists' %}">Специалисты</a></li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <ul>
+                        <li class="drop-down">
+                            <a href="#">
+                                <img class="img-circle img-fluid img-thumbnail" width="25px" height="25px" src="{{ request.user.profile.get_avatar }}">
+                                {{ request.user.username }}
+                            </a>
+                            <ul>
+                                <li><a href="{% url 'accounts:profile_info' %}">Профиль</a></li>
+                                <li><a href="{% url 'orders:my_order' %}">Мои заказы</a></li>
+                                <li><a href="{% url 'accounts:logout'%}?next=/">Выход</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                {% else %}
+                <li class="get-started">
+                    <a href="{% url 'accounts:login'%}">Войти</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        <!-- End nav-menu -->
+    </div>
+</header>
+<!-- End Header -->
+{% endblock %}
+
+{% block content %}
+<!-- ======= Start List Specialists Section ======= -->
+<section class="contact mt-section">
+    <div id="auth" class="container">
+        <div class="col-12">
+        {% for item in list_specialist %}
+        <div class="row specialist mb-4">
+            <div class="col-12 col-sm-4 col-md-2 text-center mb-4">
+                <img class="img-circle img-fluid img-thumbnail" src="{{ item.profile.get_avatar }}">
+            </div>
+            <div class="col-12 col-sm-8 col-md-10">
+                <div class="column ml-2">
+                    <h2 class="d-flex align-content-center font-weight-bold">
+                        <a href="{% url 'accounts:profile_detail' user_id=item.id %}?page={{ number_page }}">{{ item.get_full_name }}</a>
+                    </h2>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6">
+                            Телефон: {{ item.profile.phone_number }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            email: {{ item.email }}
+                        </div>
+                    </div>
+                    <h5 class="font-weight-bold">Обо мне:</h5>
+                    <p class="bg-light p-3">{{ item.profile.about_me }}</p>
+                    <h5 class="font-weight-bold">Дополнительная информация:</h5>
+                    <p class="bg-light p-3">{{ item.profile.additional_info }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+
+            <div class="col-12 d-flex justify-content-center pagination text-center">
+
+                {% if list_specialist.has_previous %}
+                <a href="?page={{ list_specialist.previous_page_number }}">←</a>
+                {% endif %}
+
+                {% for num in list_specialist.paginator.page_range %}
+                {% if num == list_specialist.number %}
+                <span class="current"><b>{{ num }}</b></span>
+                {% else %}
+                <a href="?page={{ num }}"> {{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if list_specialist.has_next %}
+                <a href="?page={{ list_specialist.next_page_number }}">→</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+        </div>
+</section>
+<!-- ======= End List Specialists Section ======= -->
+{% endblock %}

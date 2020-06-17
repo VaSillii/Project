@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<!-- ======= Short info Section ======= -->
+<div class="mt-section d-block">
+    <section id="hero" class="d-flex align-items-center ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1">
+                    <h1>FixPC.ru лучший севис по ремонту ПК.</h1>
+                    <h2>Быстрое, качественное выполнение любых видов работ в кратчайшие сроки.</h2>
+                    <a href="{% url 'base_page' %}#portfolio" class="btn-get-started scrollto">Сделать заказ</a>
+                </div>
+                <div class="d-none d-sm-none d-md-block col-lg-6 order-1 order-lg-2 hero-img">
+                    <img src="{% static 'img/repairman.png' %}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- End Short info Section -->
+
+    <main id="main">
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container">
+
+                <div class="row justify-content-between">
+                    <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
+                        <img src="{% static 'img/pc.jpg' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                    </div>
+                    <div class="col-lg-6 pt-5 pt-lg-0">
+                        <h3 data-aos="fade-up">Кто мы?</h3>
+                        <p data-aos="fade-up" data-aos-delay="100">
+                            Мы молодая, инициативная команда проффессионалов по ремонту персональных копьютеров,
+                            а также разработке, установке и наладке программного обеспечения.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-receipt"></i>
+                                <h4>Разработка ПО</h4>
+                                <p>Разработка ПО любой сложности в кратчайшие сроки.</p>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bx bx-cube-alt"></i>
+                                <h4>Ремонт</h4>
+                                <p>Ремонт, чистка, установка ПО на любые ПК по доступным ценам.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Section -->
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services section-bg">
+            <div class="container">
+
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Сервис</h2>
+                    <p>Наши предложения</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4 class="title"><a href="">Служба поддержки</a></h4>
+                            <p class="description">Круглосуточная служба поддержки для консультации по любому виду
+                                работ.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-file"></i></div>
+                            <h4 class="title"><a href="">Лучшие цены</a></h4>
+                            <p class="description">Низкие цены на все виды работ</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4 class="title"><a href="">Скорость работы</a></h4>
+                            <p class="description">Выполнение любых видов работ в кратчайшие сроки.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-world"></i></div>
+                            <h4 class="title"><a href="">Выезд мастера</a></h4>
+                            <p class="description">Выезд мастера на дом для диагности и ремонта.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Services Section -->
+
+        <!-- ======= Portfolio Section ======= -->
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Предложения</h2>
+                    <p>Виды работ</p>
+                </div>
+
+                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-6 col-md-6 portfolio-item filter-app">
+                        <div class="portfolio-wrap">
+                            <img src="{% static 'img/development.jpg'%}" class="img-fluid" alt="">
+                            <div class="portfolio-links">
+                                <a href="{% url 'orders:order_work' category_id=1%}" class="text-center btn-orange"
+                                   title="App 1">Заказать</a>
+                            </div>
+                            <div class="portfolio-info">
+                                <h4>Разработка ПО</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 portfolio-item filter-web">
+                        <div class="portfolio-wrap">
+                            <img src="{% static 'img/fix_pc.png' %}" class="img-fluid text-center" alt="">
+                            <div class="portfolio-links">
+                                <a href="{% url 'orders:order_work' category_id=2%}" class="text-center btn-orange" title="Web 3">Заказать</a>
+
+                            </div>
+                            <div class="portfolio-info">
+                                <h4>Ремонт ПК</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Portfolio Section -->
+
+        <!-- ======= Sample Work Section ======= -->
+        <section id="clients" class="clients section-bg">
+            <div class="container">
+
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Работы</h2>
+                    <p>Примеры выполненных работ</p>
+                </div>
+
+                <div class="owl-carousel clients-carousel" data-aos="fade-up" data-aos-delay="100">
+                    <img class="img-fluid text-center " src="{% static 'img/sample_pc_1.jpg' %}" height="250px" alt="">
+                    <img class="img-fluid text-center " src="{% static 'img/sample_pc_2.jpg' %}" height="250px" alt="">
+                    <img class="img-fluid text-center " src="{% static 'img/sample_pc_3.jpg' %}" height="250px" alt="">
+                    <img class="img-fluid text-center " src="{% static 'img/sample_pc_4.jpg' %}" height="250px" alt="">
+                    <img class="img-fluid text-center " src="{% static 'img/sample_pc_5.jpg' %}" height="250px" alt="">
+                </div>
+
+            </div>
+        </section>
+        <!-- End Sample Work Section -->
+    </main>
+</div>
+{% endblock %}
+
+{% block footer %}
+<!-- ======= Footer ======= -->
+<footer id="footer" class="bg-white">
+    <div class="container py-4">
+        <div class="copyright">
+            &copy; Copyright <strong><span>FixPC.ru</span></strong>. Все права защищены.
+        </div>
+    </div>
+</footer>
+<!-- End Footer -->
+{% endblock %}
